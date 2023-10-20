@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #cfa3a3;
+        }
+
+        .form-field {
+            margin-bottom: 10px;
+        }
+
+        .form-buttons {
+            text-align: center;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            border: 1px solid #1a0303;
+            border-radius: 5px;
+            background-color: #fff;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form id="survey-form">
+            <div class="form-field">
+                <label for="first-name">First Name:</label>
+                <input type="text" id="first-name" required>
+            </div>
+            <div class="form-field">
+                <label for="last-name">Last Name:</label>
+                <input type="text" id="last-name" required>
+            </div>
+            <div class="form-field">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" required>
+            </div>
+            <div class="form-field">
+                <label for="country">Country:</label>
+                <select id="country" required>
+                    <option value="usa">USA</option>
+                    <option value="canada">Canada</option>
+                    <option value="uk">UK</option>
+                    <!-- Add more countries as needed -->
+                </select>
+            </div>
+            <div class="form-field">
+                <label>Gender:</label><br>
+                <input type="checkbox" id="male" name="gender" value="Male"> <label for="male">Male</label>
+                <input type="checkbox" id="female" name="gender" value="Female"> <label for="female">Female</label>
+            </div>
+            <div class="form-field">
+                <label for="profession">Profession:</label>
+                <input type="text" id="profession" required>
+            </div>
+            <div class="form-field">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-field">
+                <label for="mobile">Mobile Number:</label>
+                <input type="tel" id="mobile" required>
+            </div>
+            <div class="form-buttons">
+                <button type="button" id="reset-button">Reset</button>
+                <button type="button" id="submit-button">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Popup to display the submitted values -->
+    <div id="popup" class="popup">
+        <h2>Survey Form Submission</h2>
+        <div id="popup-content">
+            <!-- Selected values will be displayed here -->
+        </div>
+        <button type="button" id="close-popup">Close</button>
+    </div>
+
+    <script>
+        const form = document.getElementById('survey-form');
+        const resetButton = document.getElementById('reset-button');
+        const submitButton = document.getElementById('submit-button');
+        const popup = document.getElementById('popup');
+        const closePopup = document.getElementById('close-popup');
+        const popupContent = document.getElementById('popup-content');
+
+        // Reset the form
+        resetButton.addEventListener('click', function () {
+            form.reset();
+        });
+
+        // Display the popup with submitted values
+        submitButton.addEventListener('click', function () {
+            const formData = new FormData(form);
+            let popupHTML = '<h3>Submitted Values:</h3>';
+            formData.forEach((value, key) => {
+                const label = form.querySelector(`[for="${key}"]`).textContent;
+                popupHTML += `<p><strong>${label}</strong>: ${value}</p>`;
+            });
+            popupContent.innerHTML = popupHTML;
+            popup.style.display = 'block';
+        });
+
+        // Close the popup and reset the form
+        closePopup.addEventListener('click', function () {
+            popup.style.display = 'none';
+            form.reset();
+        });
+    </script>
+</body>
+</html>
